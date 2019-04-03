@@ -18,7 +18,6 @@
 		resource="org/springframework/boot/logging/logback/file-appender.xml" />
 
 
-
 	<logger name="org.apache.tomcat" level="error" />
 	<logger name="org.springframework" level="error" />
 	<logger name="org.hibernate.SQL" level="trace" />
