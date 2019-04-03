@@ -47,7 +47,7 @@ public class MessageReceiverController {
 				+"     timestamp : {}\n"//
 				+"     nonce : {}\n"//
 				+"收到的请求内容\n{}\n"//
-       );
+                ,signature,timestamp,nonce,xml );
 		return "success";
 	}
 				
