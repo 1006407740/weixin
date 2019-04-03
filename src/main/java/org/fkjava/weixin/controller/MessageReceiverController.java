@@ -1,6 +1,9 @@
 package org.fkjava.weixin.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/lzj/wexin/reciver") // 访问哪个路径的时候，被此控制器处理
 public class MessageReceiverController {
 
+	
+	 private static final Logger LOG=LoggerFactory.getLogger(MessageReceiverController.class);
 	// 必须要有Handler方法才不会出现404
 	// Handler方法就是用来处理各种请求的操作、入口
 	@GetMapping
@@ -28,4 +33,22 @@ public class MessageReceiverController {
 
 		return echostr;
 	}
+   
+	
+	public String receive(//
+			@RequestParam(value = "signature",required = false) String signature, //
+			@RequestParam(value = "timestamp",required = false) String timestamp, //
+			@RequestParam(value = "nonce",required = false) String nonce, //
+			@RequestBody String xml//	
+			) {
+		 
+		LOG.trace("\n收到請求参数\n"
+				+"     signature : {}\n"//
+				+"     timestamp : {}\n"//
+				+"     nonce : {}\n"//
+				+"收到的请求内容\n{}\n"//
+       );
+		return "success";
+	}
+				
 }
