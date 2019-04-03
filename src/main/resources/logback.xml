@@ -6,29 +6,8 @@
 <configuration>
 	<property name="CONSOLE_LOG_PATTERN"
 		value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%C %L){cyan} %clr(:){faint} %n    %m%n%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
-
 	<include
-		resource="org/springframework/boot/logging/logback/defaults.xml" />
-	<property name="LOG_FILE"
-		value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp/lzj}}}/spring.log}" />
-
-	<include
-		resource="org/springframework/boot/logging/logback/console-appender.xml" />
-
-	<appender name="FILE"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<encoder>
-			<pattern>${FILE_LOG_PATTERN}</pattern>
-		</encoder>
-		<file>${LOG_FILE}</file>
-		<rollingPolicy
-			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
-			<maxFileSize>${LOG_FILE_MAX_SIZE:-10MB}</maxFileSize>
-			<maxHistory>${LOG_FILE_MAX_HISTORY:-0}</maxHistory>
-		</rollingPolicy>
-	</appender>
-
+		resource="org/springframework/boot/logging/logback/base.xml" />
 
 	<logger name="org.apache.tomcat" level="error" />
 	<logger name="org.springframework" level="error" />
