@@ -1,7 +1,13 @@
 package org.fkjava.weixin.controller;
 
+import javax.xml.bind.JAXB;
+
+import org.fkjava.weixin.domain.InMessage;
+import org.fkjava.weixin.service.MessageService;
+import org.fkjava.weixin.service.MessageTypeRegister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/lzj/wexin/reciver") // 访问哪个路径的时候，被此控制器处理
 public class MessageReceiverController {
 
-	
+	@Autowired
+	private MessageService messageService;
+	 
 	 private static final Logger LOG=LoggerFactory.getLogger(MessageReceiverController.class);
 	// 必须要有Handler方法才不会出现404
 	// Handler方法就是用来处理各种请求的操作、入口
@@ -49,6 +57,32 @@ public class MessageReceiverController {
 				+"     nonce : {}\n"//
 				+"收到的请求内容\n{}\n"//
                 ,signature,timestamp,nonce,xml );
+		
+
+//		if(xml.indexOf("<MsgType><![CDATA[event]]></MsgType>")>0) {
+//			// 事件
+//		}else if(xml.indexOf("<MsgType><![CDATA[location]]></MsgType>")>0) {
+//			// 位置
+//		}//......
+
+		// 截取XML字符串里面的消息类型
+		String type = xml.substring(xml.indexOf("<MsgType><![CDATA[") + 18);
+		type = type.substring(0, type.indexOf("]]></MsgType>"));
+
+		// 根据消息类型，找到对应的Java类型
+		Class<? extends InMessage> cla = MessageTypeRegister.getClass(type);
+
+		// 使用JAXB的API完成消息转换
+//		InMessage msg = JAXB.unmarshal(new StringReader(xml), cla);
+
+		// 使用XmlMapper实现XML转换成Java对象
+		
+			InMessage inMessage = JAXB.unmarshal(xml, cla);
+
+			// 后面就调用业务逻辑层负责处理消息
+			this.messageService.onMessage(inMessage);
+		
+		
 		return "success";
 	}
 				
