@@ -34,6 +34,12 @@
 	</properties>
 
 	<dependencies>
+	
+	   <dependency>
+	       <groupId>javax.xml.bind</groupId>
+	       <artifactId>jaxb-api</artifactId>
+	   </dependency>
+	   
 	    <!-- 加入Spring Data JPA的依赖，会自动下载Hibernate等相关的依赖文件，而且会自动完成配置 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
