@@ -7,9 +7,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.fkjava.weixin.domain.InMessage;
 
-@XmlRootElement(name = "xml")
-@XmlAccessorType(XmlAccessType.FIELD)
-public class EventInMessage extends InMessage{
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@XmlRootElement(name = "xml") // 指定XML的根元素名称
+@XmlAccessorType(XmlAccessType.FIELD) // 指定属性的访问方式为字段
+public class EventInMessage extends InMessage {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@XmlElement(name = "Event")
+	@JsonProperty("Event")
+	private String event;
+
+	@XmlElement(name = "EventKey")
+	@JsonProperty("EventKey")
+	private String eventKey;
+
+	public EventInMessage() {
+		super("event");
+	}
 
 	public String getEvent() {
 		return event;
@@ -19,21 +37,11 @@ public class EventInMessage extends InMessage{
 		this.event = event;
 	}
 
-	public String getEventkey() {
-		return eventkey;
+	public String getEventKey() {
+		return eventKey;
 	}
 
-	public void setEventkey(String eventkey) {
-		this.eventkey = eventkey;
-	}
-
-	private static final long serialVersionUID = 1L;
-	@XmlElement(name = "Event")
-	private String event;
-	@XmlElement(name = "Eventkey")
-	private String eventkey;
-	
-	public EventInMessage() {
-		super("event");
+	public void setEventKey(String eventKey) {
+		this.eventKey = eventKey;
 	}
 }
