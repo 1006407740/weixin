@@ -1,5 +1,7 @@
 package org.fkjava.weixin.controller;
 
+import java.io.StringReader;
+
 import javax.xml.bind.JAXB;
 
 import org.fkjava.weixin.domain.InMessage;
@@ -73,11 +75,11 @@ public class MessageReceiverController {
 		Class<? extends InMessage> cla = MessageTypeRegister.getClass(type);
 
 		// 使用JAXB的API完成消息转换
-//		InMessage msg = JAXB.unmarshal(new StringReader(xml), cla);
+        InMessage inMessage = JAXB.unmarshal(new StringReader(xml), cla);
 
 		// 使用XmlMapper实现XML转换成Java对象
 		
-			InMessage inMessage = JAXB.unmarshal(xml, cla);
+		//	InMessage inMessage = JAXB.unmarshal(xml, cla);
 
 			// 后面就调用业务逻辑层负责处理消息
 			this.messageService.onMessage(inMessage);
